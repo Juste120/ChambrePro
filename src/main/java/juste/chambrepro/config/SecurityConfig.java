@@ -38,6 +38,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/chambres/**").permitAll() // Lecture publique
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        // Swagger UI et OpenAPI
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
+                        // Actuator endpoints
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

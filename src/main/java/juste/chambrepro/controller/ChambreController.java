@@ -59,10 +59,12 @@ public class ChambreController {
         return chambreService.updateChambre(trackingId, request);
     }
 
-    @PostMapping("/{trackingId}/photo")
+    @PostMapping(value = "/{trackingId}/photo", consumes = { "multipart/form-data" })
     @PreAuthorize("hasRole('ADMIN')")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Upload a photo for a chambre")
     public ChambreResponse uploadPhoto(
             @PathVariable UUID trackingId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "File to upload", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary"))
             @RequestParam("file") MultipartFile file) {
         return chambreService.uploadPhoto(trackingId, file);
     }
