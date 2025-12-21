@@ -1,0 +1,76 @@
+package juste.chambrepro.controller;
+
+import jakarta.validation.Valid;
+import juste.chambrepro.dto.requests.ChambreRequest;
+import juste.chambrepro.dto.responses.ChambreResponse;
+import juste.chambrepro.enums.TypeChambre;
+import juste.chambrepro.service.ChambreService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/api/chambres")
+@RequiredArgsConstructor
+public class ChambreController {
+
+    private final ChambreService chambreService;
+
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ChambreResponse createChambre(@Valid @RequestBody ChambreRequest request) {
+        return chambreService.createChambre(request);
+    }
+
+    @GetMapping("/{trackingId}")
+    public ChambreResponse getChambre(@PathVariable UUID trackingId) {
+        return chambreService.getChambreByTrackingId(trackingId);
+    }
+
+    @GetMapping
+    public List<ChambreResponse> getAllChambres() {
+        return chambreService.getAllChambres();
+    }
+
+    @GetMapping("/type/{type}")
+    public List<ChambreResponse> getChambresByType(@PathVariable TypeChambre type) {
+        return chambreService.getChambresByType(type);
+    }
+
+    @GetMapping("/disponibles")
+    public List<ChambreResponse> getChambresDisponibles(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
+        return chambreService.getChambresDisponibles(dateDebut, dateFin);
+    }
+
+    @PutMapping("/{trackingId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ChambreResponse updateChambre(
+            @PathVariable UUID trackingId,
+            @Valid @RequestBody ChambreRequest request) {
+        return chambreService.updateChambre(trackingId, request);
+    }
+
+    @PostMapping("/{trackingId}/photo")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ChambreResponse uploadPhoto(
+            @PathVariable UUID trackingId,
+            @RequestParam("file") MultipartFile file) {
+        return chambreService.uploadPhoto(trackingId, file);
+    }
+
+    @DeleteMapping("/{trackingId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteChambre(@PathVariable UUID trackingId) {
+        chambreService.deleteChambre(trackingId);
+    }
+}
