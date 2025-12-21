@@ -67,7 +67,7 @@ The API will be available at `http://localhost:8080`. You can use a tool like Po
 
 The API documentation is available through Swagger UI at `http://localhost:8080/swagger-ui.html`.
 
-![Swagger UI](docs/images/swagger.png)
+![Swagger UI](docs/images/swagger-api.png)
 
 ## License
 
