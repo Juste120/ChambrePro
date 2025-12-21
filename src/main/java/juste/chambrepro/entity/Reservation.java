@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import juste.chambrepro.enums.StatutReservation;
 import juste.chambrepro.shared.utils.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import java.time.LocalDate;
 
 @Entity
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class Reservation extends BaseEntity {
 
     @Column(name = "date_debut", nullable = false)

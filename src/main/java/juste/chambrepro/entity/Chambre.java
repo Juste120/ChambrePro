@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import juste.chambrepro.enums.TypeChambre;
 import juste.chambrepro.shared.utils.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import java.math.BigDecimal;
 
 @Entity
@@ -17,7 +18,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class Chambre extends BaseEntity {
 
     @Column(nullable = false, unique = true, length = 10)

@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:chambrepro_db}
+    username: ${DB_USERNAME:chambrepro_user}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        use_sql_comments: true
+        generate_statistics: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    validate-on-migrate: true
+    clean-disabled: false
+
+# Logging pour développement
+logging:
+  level:
+    root: INFO
+    com.chambrepro: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    io.minio: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %highlight(%-5level) %logger{36} - %msg%n"
+  file:
+    name: logs/chambrepro-dev.log
+    max-size: 10MB
+    max-history: 7
+
+# Actuator pour monitoring (développement)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,beans,flyway
+  endpoint:
+    health:
+      show-details: always
+
+# CORS pour développement (frontend local)
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:5173,http://localhost:4200
+  allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
+  allowed-headers: "*"
+  allow-credentials: true
+  max-age: 3600

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import juste.chambrepro.enums.Role;
 import juste.chambrepro.shared.utils.BaseEntity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(
@@ -16,7 +17,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class Client extends BaseEntity {
 
     @Column(nullable = false, length = 100)

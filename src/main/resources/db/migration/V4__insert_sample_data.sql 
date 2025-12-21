@@ -1,0 +1,20 @@
+-- Insertion d'un admin (mot de passe: Admin123!)
+-- Hash BCrypt de "Admin123!" : $2a$10$xL5PYfqJYF4qJ4hR6FGTzOGTqPxKk8yFmDHPP4HvV7k8qXBqVXGXq
+INSERT INTO clients (nom, email, mot_de_passe, role)
+VALUES ('Administrateur', 'admin@roomease.com', '$2a$10$xL5PYfqJYF4qJ4hR6FGTzOGTqPxKk8yFmDHPP4HvV7k8qXBqVXGXq', 'ADMIN')
+ON CONFLICT (email) DO NOTHING;
+
+-- Insertion d'un utilisateur normal (mot de passe: User123!)
+-- Hash BCrypt de "User123!" : $2a$10$N.zmdr9k7uOCQb97qKhJD.4fFsRYPQx0KxzBVG8FdJUzxRYB7gYPG
+INSERT INTO clients (nom, email, mot_de_passe, role)
+VALUES ('Jean Dupont', 'jean.dupont@example.com', '$2a$10$N.zmdr9k7uOCQb97qKhJD.4fFsRYPQx0KxzBVG8FdJUzxRYB7gYPG', 'USER')
+ON CONFLICT (email) DO NOTHING;
+
+-- Insertion de chambres d'exemple
+INSERT INTO chambres (numero, type, prix_par_nuit, nombre_lits, description)
+VALUES
+    ('101', 'SIMPLE', 50.00, 1, 'Chambre simple avec vue sur jardin'),
+    ('102', 'DOUBLE', 80.00, 2, 'Chambre double confortable avec balcon'),
+    ('201', 'SUITE', 150.00, 2, 'Suite luxueuse avec salon séparé'),
+    ('202', 'FAMILIALE', 120.00, 4, 'Chambre familiale spacieuse')
+ON CONFLICT (numero) DO NOTHING;
