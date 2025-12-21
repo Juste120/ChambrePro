@@ -75,6 +75,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-PAKOU Komi Juste - [@pakoujuste](https://twitter.com/pakoujuste) - pakoujuste@gmail.com
+PAKOU Komi Juste - [@pakoujuste](https://twitter.com/pakoujuste) - pakoujuste2019@gmail.com
 
-Project Link: [https://github.com/your_username/ChambrePro](https://github.com/your_username/ChambrePro)
+Project Link: [https://github.com/Juste120/ChambrePro](https://github.com/your_username/ChambrePro)
