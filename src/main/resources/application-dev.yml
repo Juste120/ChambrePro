@@ -29,14 +29,14 @@ spring:
     validate-on-migrate: true
     clean-disabled: false
 
-# MinIO Configuration (développement local)
+# MinIO Configuration
 minio:
   url: ${MINIO_URL:http://localhost:9000}
   access-key: ${MINIO_ACCESS_KEY:minioadmin}
   secret-key: ${MINIO_SECRET_KEY:minioadmin2025}
   bucket-name: ${MINIO_BUCKET_NAME:chambrepro-photos}
 
-# JWT Configuration (développement local)
+# JWT Configuration
 jwt:
   secret: ${JWT_SECRET:dGhpc2lzYXZlcnlsb25nc2VjcmV0a2V5Zm9yand0dG9rZW5zMTIzNDU2Nzg5MGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6}
   expiration: ${JWT_EXPIRATION:86400000}
@@ -58,7 +58,7 @@ logging:
     max-size: 10MB
     max-history: 7
 
-# Actuator pour monitoring (développement)
+# Actuator pour monitoring
 management:
   endpoints:
     web:
@@ -68,7 +68,7 @@ management:
     health:
       show-details: always
 
-# CORS pour développement (frontend local)
+# CORS pour développement
 cors:
   allowed-origins: http://localhost:3000,http://localhost:5173,http://localhost:4200
   allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
