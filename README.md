@@ -44,7 +44,7 @@ To get a local copy up and running follow these simple steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username/ChambrePro.git
+   git clone https://github.com/Juste120/ChambrePro.git
    ```
 2. Navigate to the project directory
    ```sh
@@ -75,6 +75,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-PAKOU Komi Juste - [@pakoujuste](https://twitter.com/pakoujuste) - pakoujuste2019@gmail.com
+PAKOU Komi Juste - [@pakoujuste](https://twitter.com/pakoujuste) - pakoujuste@gmail.com
 
-Project Link: [https://github.com/Juste120/ChambrePro](https://github.com/your_username/ChambrePro)
+Project Link: [https://github.com/Juste120/ChambrePro](https://github.com/Juste120/ChambrePro)

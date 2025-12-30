@@ -15,7 +15,6 @@ public interface ClientMapper {
     @Mapping(target = "trackingId", expression = "java(UUID.randomUUID())")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "role", constant = "USER")
     @Mapping(target = "motDePasse", ignore = true)
     Client toEntity(ClientRequest request);
 }

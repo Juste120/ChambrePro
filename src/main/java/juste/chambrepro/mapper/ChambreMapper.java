@@ -15,13 +15,13 @@ public interface ChambreMapper {
     @Mapping(target = "trackingId", expression = "java(UUID.randomUUID())")
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "photoUrl", ignore = true)
+    @Mapping(target = "photoUrls", ignore = true)
     Chambre toEntity(ChambreRequest request);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "trackingId", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "photoUrl", ignore = true)
+    @Mapping(target = "photoUrls", ignore = true)
     void updateEntity(@MappingTarget Chambre entity, ChambreRequest request);
 }

@@ -15,6 +15,6 @@ public interface ChambreService {
     List<ChambreResponse> getChambresByType(TypeChambre type);
     List<ChambreResponse> getChambresDisponibles(LocalDate dateDebut, LocalDate dateFin);
     ChambreResponse updateChambre(UUID trackingId, ChambreRequest request);
-    ChambreResponse uploadPhoto(UUID trackingId, MultipartFile file);
+    ChambreResponse uploadPhotos(UUID trackingId, MultipartFile[] files);
     void deleteChambre(UUID trackingId);
 }

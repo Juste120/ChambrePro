@@ -6,6 +6,7 @@ import juste.chambrepro.shared.utils.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(
@@ -37,7 +38,9 @@ public class Chambre extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "photo_url", length = 500)
-    private String photoUrl;
+    @ElementCollection
+    @CollectionTable(name = "chambre_photos", joinColumns = @JoinColumn(name = "chambre_id"))
+    @Column(name = "photo_urls", length = 500)
+    private List<String> photoUrls;
 
 }

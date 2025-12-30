@@ -11,7 +11,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestPart;
 import java.time.LocalDate;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,6 +55,9 @@ public class ChambreController {
     public List<ChambreResponse> getChambresDisponibles(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateDebut,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFin) {
+        if (!dateDebut.isBefore(dateFin)) {
+            throw new IllegalArgumentException("La date de début doit être antérieure à la date de fin.");
+        }
         return chambreService.getChambresDisponibles(dateDebut, dateFin);
     }
 
@@ -59,14 +69,13 @@ public class ChambreController {
         return chambreService.updateChambre(trackingId, request);
     }
 
-    @PostMapping(value = "/{trackingId}/photo", consumes = { "multipart/form-data" })
+    @PostMapping(value = "/{trackingId}/photos", consumes = { "multipart/form-data" })
     @PreAuthorize("hasRole('ADMIN')")
-    @io.swagger.v3.oas.annotations.Operation(summary = "Upload a photo for a chambre")
-    public ChambreResponse uploadPhoto(
+    @Operation(summary = "Upload photos for a chambre")
+    public ChambreResponse uploadPhotos(
             @PathVariable UUID trackingId,
-            @io.swagger.v3.oas.annotations.Parameter(description = "File to upload", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary"))
-            @RequestParam("file") MultipartFile file) {
-        return chambreService.uploadPhoto(trackingId, file);
+            @RequestPart("files") MultipartFile[] files) {
+        return chambreService.uploadPhotos(trackingId, files);
     }
 
     @DeleteMapping("/{trackingId}")

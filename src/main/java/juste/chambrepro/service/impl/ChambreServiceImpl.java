@@ -101,21 +101,30 @@ public class ChambreServiceImpl implements ChambreService {
 
     @Override
     @Transactional
-    public ChambreResponse uploadPhoto(UUID trackingId, MultipartFile file) {
-        log.info("Upload de photo pour la chambre: {}", trackingId);
+    public ChambreResponse uploadPhotos(UUID trackingId, MultipartFile[] files) {
+        log.info("Upload de photos pour la chambre: {}", trackingId);
 
         Chambre chambre = chambreRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Chambre", "trackingId", trackingId));
 
-        if (chambre.getPhotoUrl() != null) {
-            minioService.deleteFile(chambre.getPhotoUrl());
+        // Supprimer les anciennes photos
+        if (chambre.getPhotoUrls() != null && !chambre.getPhotoUrls().isEmpty()) {
+            chambre.getPhotoUrls().forEach(minioService::deleteFile);
+            chambre.getPhotoUrls().clear();
         }
 
-        String photoUrl = minioService.uploadFile(file, "chambres/");
-        chambre.setPhotoUrl(photoUrl);
+        // Uploader les nouvelles photos
+        List<String> photoUrls = new java.util.ArrayList<>();
+        for (MultipartFile file : files) {
+            if (!file.isEmpty()) {
+                String photoUrl = minioService.uploadFile(file, "chambres/");
+                photoUrls.add(photoUrl);
+            }
+        }
+        chambre.setPhotoUrls(photoUrls);
 
         Chambre updated = chambreRepository.save(chambre);
-        log.info("Photo uploadée avec succès pour la chambre: {}", trackingId);
+        log.info("Photos uploadées avec succès pour la chambre: {}", trackingId);
 
         return chambreMapper.toResponse(updated);
     }
@@ -128,8 +137,8 @@ public class ChambreServiceImpl implements ChambreService {
         Chambre chambre = chambreRepository.findByTrackingId(trackingId)
                 .orElseThrow(() -> new ResourceNotFoundException("Chambre", "trackingId", trackingId));
 
-        if (chambre.getPhotoUrl() != null) {
-            minioService.deleteFile(chambre.getPhotoUrl());
+        if (chambre.getPhotoUrls() != null && !chambre.getPhotoUrls().isEmpty()) {
+            chambre.getPhotoUrls().forEach(minioService::deleteFile);
         }
 
         chambreRepository.delete(chambre);

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -58,5 +59,18 @@ public class OpenApiConfig {
                                                                 + "4. Collez le token dans le champ 'Value'\n"
                                                                 + "5. Cliquez sur 'Authorize' puis 'Close'\n\n"
                                                                 + "Le token sera automatiquement ajouté à toutes les requêtes.")));
+    }
+
+    @Bean
+    public OpenApiCustomizer openApiCustomizer() {
+        return openApi -> {
+            // Crée un schéma réutilisable pour un tableau de fichiers binaires
+            var filesSchema = new io.swagger.v3.oas.models.media.Schema<List<String>>()
+                    .type("array")
+                    .items(new io.swagger.v3.oas.models.media.Schema<String>().type("string").format("binary"));
+
+            // Ajoute ce schéma aux composants OpenAPI sous le nom 'files'
+            openApi.getComponents().addSchemas("files", filesSchema);
+        };
     }
 }

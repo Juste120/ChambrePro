@@ -37,6 +37,15 @@ public class ClientServiceImpl implements ClientService {
 
         Client client = clientMapper.toEntity(request);
         client.setMotDePasse(passwordEncoder.encode(request.motDePasse()));
+        if (request.role() == null || request.role().isEmpty()) {
+            client.setRole(juste.chambrepro.enums.Role.USER);
+        } else {
+            try {
+                client.setRole(juste.chambrepro.enums.Role.valueOf(request.role().toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Le rôle '" + request.role() + "' n'est pas valide.");
+            }
+        }
 
         Client saved = clientRepository.save(client);
         log.info("Client créé avec succès: {}", saved.getTrackingId());

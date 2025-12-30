@@ -12,6 +12,6 @@ public record ChambreResponse(
         BigDecimal prixParNuit,
         Integer nombreLits,
         String description,
-        String photoUrl,
+        java.util.List<String> photoUrls,
         LocalDateTime createdAt
 ) {}
